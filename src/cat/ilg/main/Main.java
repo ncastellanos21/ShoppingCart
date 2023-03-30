@@ -1,6 +1,10 @@
 package cat.ilg.main;
 
+import java.util.HashSet;
+import java.util.TreeSet;
+
 import cat.ilg.cart.Cart;
+import cat.ilg.cart.CartDI;
 import cat.ilg.cart.Category;
 import cat.ilg.cart.ICart;
 import cat.ilg.cart.Product;
@@ -10,7 +14,8 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		ICart cart = fillCart(new Cart());
+		ICart cart = fillCart(new CartDI(new TreeSet<>()));
+		fillMore(cart);
 		
 		cart.printCart();
 	}
@@ -53,6 +58,44 @@ public class Main {
 	    cart.addProduct(p6); //Afegim una unitat del producte p6
 	    
 	    return cart;
+	}
+	
+	
+	private static ICart fillMore(ICart cart){  
+		
+		Product p7 = new Product("p7", Category.COMPUTERS);
+		p7.setName("Desktop");
+		p7.setPrice(305.0f);
+
+		Product p8 = new Product("p8", Category.FOOD);
+		p8.setName("Peach");
+		p8.setPrice(0.40f);
+
+		Product p9 = new Product("p9", Category.BOOKS);
+		p9.setName("Learn Advanced Java");
+		p9.setPrice(33.9f);
+
+		Product p10 = new Product("p10", Category.COMPUTERS);
+		p10.setName("RAM 16Gb");
+		p10.setPrice(60.2f);
+
+		Product p11 = new Product("p11", Category.FOOD);
+		p11.setName("Ravioli");
+		p11.setPrice(3.4f);
+
+		Product p12 = new Product("p12", Category.BOOKS);
+		p12.setName("Data Science Masterclass");
+		p12.setPrice(39.5f);
+		
+	    ICart cart2 = fillCart(cart);
+	    cart2.addProduct(p7); //Afegim una unitat del producte p7
+	    cart2.addProduct(p7,2); //Afegim dues unitats del producte p7
+	    cart2.addProduct(p8,6); //Afegim 6 unitats del producte p8
+	    cart2.addProduct(p9,2); //Afegim 2 unitats del producte p9
+	    cart2.addProduct(p10); //Afegim una unitat del producte p10
+	    cart2.addProduct(p11,2); //Afegim 2 unitats del producte p11
+	    cart2.addProduct(p12,3); //Afegim 3 unitats del producte p12
+	    return cart2;
 	}
 
 }

@@ -9,8 +9,17 @@ import java.util.TreeSet;
 public class Cart implements ICart{
 	
 	//properties
-	private final Set<Triplet<Product,Integer,Float>> lines = new HashSet<>();
+	private final Set<Line<Product,Integer,Float>> lines;
     private float total = 0.0f;
+    
+    //Constructor
+    public Cart() {
+    	lines = new HashSet<>();
+    }
+    
+    public Cart(Set<Line<Product,Integer,Float>> lines) {
+    	this.lines = lines;
+    }
         
     //needed getters
     public float getTotal() {
@@ -21,18 +30,18 @@ public class Cart implements ICart{
     	this.total = total;
     }
     
-    public Set<Triplet<Product, Integer, Float>> getLines() {
+    public Set<Line<Product, Integer, Float>> getLines() {
     	return lines;
     }
     
 
     //Helper methods are private
-    private boolean updateLine(Triplet<Product,Integer,Float> line){
+    private boolean updateLine(Line<Product,Integer,Float> line){
         if(!lines.contains(line)) {
             return false;
         }
         
-        for(Triplet<Product,Integer,Float> triplet : lines) {
+        for(Line<Product,Integer,Float> triplet : lines) {
         	if (triplet.equals(line)) {
         		//Update
 	        	triplet.setT(line.getT()); //product Update
@@ -50,7 +59,7 @@ public class Cart implements ICart{
 	private boolean cartContains(Product product){
         // Iterating over hash set items 
         // using a foreach (enhanced for loop)
-        for(Triplet<Product,Integer,Float> cline : lines){
+        for(Line<Product,Integer,Float> cline : lines){
             if(cline.getT().equals(product)){
                 return true;
             }
@@ -58,7 +67,7 @@ public class Cart implements ICart{
         return false;
     }
 
-	private void updateTotal(Triplet<Product,Integer,Float> line){
+	private void updateTotal(Line<Product,Integer,Float> line){
         this.total = this.total + line.getT2();
         //update the property total after adding the new line
         //total keeps the total price of the cart
@@ -75,7 +84,7 @@ public class Cart implements ICart{
     @Override
     public boolean addProduct(Product product, int amount){
     	
-    	Triplet<Product,Integer,Float> line = new Triplet<>();
+    	Line<Product,Integer,Float> line = new Line<>();
     	line.setT(product);
     	line.setT1(amount);
     	line.setT2((float)(product.getPrice()) * amount);
@@ -118,7 +127,7 @@ public class Cart implements ICart{
         System.out.printf("%6s - %25s | %8s | %8s | %14s\n", "ID", "Name", 
                             "Price", "Amount", "Total Price (€)");
         System.out.println("			--------------------------------------------------");
-        for(Triplet<Product,Integer,Float> line: lines){
+        for(Line<Product,Integer,Float> line: lines){
             //Position 0 contains ID Product as String
             //Position 1 contains product name as String
             //Position 2 contains product price (per unit) as String
